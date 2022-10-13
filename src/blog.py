@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import sys
 import utils
-from token import Token
+from token import Token # our library for lexical analysis/tokenization
 
 def skip_space(token: Token):
     while not token.is_over() and (token == ' ' or token == '\n'):
