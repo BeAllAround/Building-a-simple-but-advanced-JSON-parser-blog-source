@@ -35,7 +35,7 @@ def logObject(obj):
 def isEmpty(arr):
     return not bool(len(arr))
 
-def _export_json(obj, source_id, t = 1):
+def _export_json(obj, current_source, main_source, t = 1):
     if type(obj) == dict:
         keys = obj.keys()
         log('{')
@@ -46,10 +46,13 @@ def _export_json(obj, source_id, t = 1):
             logObject(key)
             log(': ')
 
-            if id(obj[key]) == source_id: # check the address to avoid Recursion Error
-                log('{...}')
+            if id(obj[key]) == id(current_source): # check the address to avoid Recursion Error: pointers
+                if type(obj[key]) == dict: # circular 'dict'
+                    log('{...}')
+                elif type(item) == list: # circular 'list'
+                    log('[...]')
             else:
-                _export_json(obj[key], source_id, t+1)
+                _export_json(obj[key], obj[key], main_source, t+1)
             if len(keys) - i - 1:
                 log(',')
             log('\n')
@@ -64,10 +67,15 @@ def _export_json(obj, source_id, t = 1):
             log('\n')
         for i, item in enumerate(obj):
             log('    ' * t)
-            if id(item) == source_id:
-                log('{...}')
+            if id(item) == id(current_source):
+                if type(item) == dict: # circular 'dict'
+                    log('{...}')
+                elif type(item) == list: # circular 'list'
+                    log('[...]')
+            elif id(item) == id(main_source):
+                log('{...}') # circular 'dict' by default
             else:
-                _export_json(item, source_id, t+1)
+                _export_json(item, item, main_source, t+1)
             if len(obj) - i - 1:
                 log(',')
             log('\n')
@@ -79,7 +87,7 @@ def _export_json(obj, source_id, t = 1):
         logObject(obj)
 
 def export_json(obj):
-    _export_json(obj, id(obj))
+    _export_json(obj, obj, obj)
     log('\n')
 
 
