@@ -82,7 +82,10 @@ def _export_json(obj, current_source, main_source, t = 1):
             elif id(item) == id(main_source):
                 log('{...}') # circular 'dict' by default
             else:
-                _export_json(item, item, main_source, t+1)
+                if type(item) == dict: # new main_source entry
+                    _export_json(item, item, item, t+1)
+                else:
+                    _export_json(item, item, main_source, t+1)
             if len(obj) - i - 1:
                 log(',')
             log('\n')
