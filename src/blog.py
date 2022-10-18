@@ -170,6 +170,7 @@ def main():
     scope = {'func': lambda x,y: x+y, 'func1': lambda: print('hi!'),}
     default_flags = {}
     obj = parse_obj(t, False, scope, default_flags)
+    # snippet 9 - displaying your json data
     utils.export_json(obj)
     print(obj)
 
