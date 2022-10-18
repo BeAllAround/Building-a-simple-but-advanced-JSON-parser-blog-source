@@ -61,7 +61,14 @@ def _export_json(obj, memo, t = 1):
                 elif type(obj[key]) == list: # circular 'list'
                     log('[...]')
             else:
+                if (not _id) and (type(obj[key]) == dict): # circular check algo
+                    memo[id(obj[key])] = obj[key]
+
                 _export_json(obj[key], memo, t+1)
+
+                if (not _id) and (type(obj[key]) == dict): # circular check algo - remove the 'id' for the current scope
+                    del memo[id(obj[key])]
+
             if len(keys) - i - 1:
                 log(',')
             log('\n')
