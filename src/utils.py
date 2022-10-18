@@ -39,8 +39,12 @@ def logObject(obj):
 def isEmpty(arr):
     return not bool(len(arr))
 
-def _export_json(obj, current_source, main_source, t = 1):
+def _export_json(obj, memo, t = 1):
     if type(obj) == dict:
+        _id = memo.get(id(obj))
+        if not _id:
+            memo[id(obj)] = obj
+
         keys = obj.keys()
         log('{')
         if not isEmpty(keys):
@@ -50,16 +54,16 @@ def _export_json(obj, current_source, main_source, t = 1):
             logObject(key)
             log(': ')
 
-            if id(obj[key]) == id(current_source): # check the address to avoid Recursion Error: pointers
+            _id = memo.get(id(obj[key]))
+            if _id: # check the address to avoid Recursion Error: pointers
                 if type(obj[key]) == dict: # circular 'dict'
                     log('{...}')
-                elif type(item) == list: # circular 'list'
+                elif type(obj[key]) == list: # circular 'list'
                     log('[...]')
             else:
-                if type(obj[key]) == dict: # new main_source entry
-                    _export_json(obj[key], obj[key], obj[key], t+1)
-                else:
-                    _export_json(obj[key], obj[key], main_source, t+1)
+                if (not _id) and (type(obj[key]) == dict):
+                    memo[id(obj[key])] = obj[key]
+                _export_json(obj[key], memo, t+1)
             if len(keys) - i - 1:
                 log(',')
             log('\n')
@@ -69,23 +73,27 @@ def _export_json(obj, current_source, main_source, t = 1):
         log('}')
 
     elif type(obj) == list:
+        _id = memo.get(id(obj))
+        if not _id:
+            memo[id(obj)] = obj
+
         log('[')
         if not isEmpty(obj):
             log('\n')
         for i, item in enumerate(obj):
             log('    ' * t)
-            if id(item) == id(current_source):
+
+            _id = memo.get(id(item))
+            if _id: # check the address to avoid Recursion Error: pointers
                 if type(item) == dict: # circular 'dict'
                     log('{...}')
                 elif type(item) == list: # circular 'list'
                     log('[...]')
-            elif id(item) == id(main_source):
-                log('{...}') # circular 'dict' by default
             else:
-                if type(item) == dict: # new main_source entry
-                    _export_json(item, item, item, t+1)
-                else:
-                    _export_json(item, item, main_source, t+1)
+                if (not _id) and (type(item) == dict):
+                    memo[id(item)] = item
+                _export_json(item, memo, t+1)
+
             if len(obj) - i - 1:
                 log(',')
             log('\n')
@@ -97,7 +105,7 @@ def _export_json(obj, current_source, main_source, t = 1):
         logObject(obj)
 
 def export_json(obj):
-    _export_json(obj, obj, obj)
+    _export_json(obj, {}) # memo map for circular objects / references to the objects themselves
     log('\n')
 
 

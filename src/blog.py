@@ -169,7 +169,9 @@ def main():
     # t = Token('{}')
     scope = {'func': lambda x,y: x+y, 'func1': lambda: print('hi!'),}
     default_flags = {}
-    print(parse_obj(t, False, scope, default_flags))
+    obj = parse_obj(t, False, scope, default_flags)
+    utils.export_json(obj)
+    print(obj)
 
 if __name__ == '__main__':
     main()
