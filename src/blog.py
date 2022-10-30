@@ -163,13 +163,13 @@ def parse_obj(token: Parser, get: bool, scope: dict, flags: utils.Map):
         raise SyntaxError("Unexpected token " + token.current)
 
 def main():
-    t = Parser(r'''{a: 12, b: 11, c: {b: 1, d: {a: 21}}, d1: ((c.d.a)*2+1), d2: 110, f1: func(1,2), f2: func1() }''')
-    t = Parser(r'''{c: {b: 1, d: {a: 21}}, d1: (((c.d).a)*2+1), f: (func)(1+1, 2*2)}''')
-    # t = Parser('{a:1}')
-    # t = Parser('{}')
+    text = Parser(r'''{a: 12, b: 11, c: {b: 1, d: {a: 21}}, d1: ((c.d.a)*2+1), d2: 110, f1: func(1,2), f2: func1() }''')
+    text = Parser(r'''{c: {b: 1, d: {a: 21}}, d1: (((c.d).a)*2+1), f: (func)(1+1, 2*2)}''')
+    # text = Parser('{a:1}')
+    # text = Parser('{}')
     scope = {'func': lambda x,y: x+y, 'func1': lambda: print('hi!'),}
     default_flags = {}
-    obj = parse_obj(t, False, scope, default_flags)
+    obj = parse_obj(text, False, scope, default_flags)
     # snippet 9 - displaying your json data
     utils.export_json(obj)
     print(obj)
