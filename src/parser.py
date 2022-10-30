@@ -1,7 +1,7 @@
 class EndLine(Exception):
     pass
 
-class Parser:
+class Token:
 
     def __init__(self, source, c = 0):
         self.c = c
@@ -31,3 +31,7 @@ class Parser:
     def set_token(self, token):
         self.source = token.source
         self.c = token.c
+
+# reuse Token to extend Parser - adding new methods in the future, and vice versa
+class Parser(Token): 
+    pass
