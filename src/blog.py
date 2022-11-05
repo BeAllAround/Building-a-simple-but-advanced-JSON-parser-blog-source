@@ -168,7 +168,7 @@ def main():
     # text = Parser('{a:1}')
     # text = Parser('{}')
     scope = {'func': lambda x,y: x+y, 'func1': lambda: print('hi!'),}
-    default_flags = {}
+    default_flags = utils.Map({})
     obj = parse_obj(text, False, scope, default_flags)
     # snippet 9 - displaying your json data
     utils.export_json(obj)
