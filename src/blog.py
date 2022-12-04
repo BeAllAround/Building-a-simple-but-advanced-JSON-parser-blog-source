@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import sys
 import utils
-from parser import Char_stream # our library to help us with lexical analysis/tokenization
+from parser import Char_stream # our library that will help us with lexical analysis/tokenization
 
 def skip_space(char_stream: Char_stream):
     while not char_stream.is_over() and (char_stream == ' ' or char_stream == '\n'):
