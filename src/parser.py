@@ -1,7 +1,7 @@
 class EndLine(Exception):
     pass
 
-class Token_stream:
+class Char_stream:
 
     def __init__(self, source, c = 0):
         self.c = c # counter for our token stream
@@ -28,10 +28,10 @@ class Token_stream:
     def is_over(self):
         return not self.c < len(self.source)
 
-    def set_ts(self, token_stream):
-        self.source = token_stream.source
-        self.c = token_stream.c
+    def set_cs(self, char_stream):
+        self.source = char_stream.source
+        self.c = char_stream.c
 
-# reuse Token_stream to extend Parser - adding new methods in the future, and vice versa
-class Parser(Token_stream): 
+# reuse Char_stream to extend Parser - adding new methods in the future, and vice versa
+class Parser(Char_stream): 
     pass
