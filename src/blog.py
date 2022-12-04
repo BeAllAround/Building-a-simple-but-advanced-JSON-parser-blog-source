@@ -83,7 +83,7 @@ def chain_main(token_stream: Token_stream, value_ptr: list, scope: dict):
                     value_ptr[0] = value_ptr[0](*args) # evaluate the function with x number of arguments passed
                     break
                 else:
-                    raise SyntaxError("Unexpected token while parsing a function: " + token_stream.current)
+                    raise SyntaxError("Unexpected char while parsing a function: " + token_stream.current)
         elif type(value_ptr[0]) == dict and token_stream == '.':
             tem = parse_tem(token_stream, True)
             skip_space(token_stream)
@@ -157,10 +157,12 @@ def parse_obj(token_stream: Token_stream, get: bool, scope: dict, flags: utils.M
                 elif token_stream == ',':
                     continue
                 else:
-                    print([token_stream.current])
-                    raise SyntaxError("Unexpected token " + token_stream.current)
+                    # print(token_stream.current)
+                    raise SyntaxError("Unexpected char " + token_stream.current)
+            else:
+                raise SyntaxError("Unexpected char " + token_stream.current)
     else:
-        raise SyntaxError("Unexpected token " + token_stream.current)
+        raise SyntaxError("Unexpected char " + token_stream.current)
 
 def main():
     text = Token_stream(r'''{a: 12, b: 11, c: {b: 1, d: {a: 21}}, d1: ((c.d.a)*2+1), d2: 110, f1: func(1,2), f2: func1() }''')
