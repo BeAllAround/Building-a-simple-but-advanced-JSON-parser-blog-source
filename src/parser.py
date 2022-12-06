@@ -32,6 +32,10 @@ class Char_stream:
         self.source = char_stream.source
         self.c = char_stream.c
 
-# reuse Char_stream to extend Parser - adding new methods in the future, and vice versa
-class Parser(Char_stream): 
+# reuse Char_stream to extend Lexer and then Parser - adding new methods in the future, and vice versa
+class Lexer(Char_stream):
+    pass
+
+# use Parser with Lexer to generate AST
+class Parser(Lexer): 
     pass
