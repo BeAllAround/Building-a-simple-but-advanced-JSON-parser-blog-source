@@ -42,7 +42,7 @@ class Lexer():
         self.char_stream = Char_stream(expression)
         self.tokens = [] # List<Token>
 
-    def lex(): # tokenize
+    def lex(self): # tokenize
         return self.tokens
 
 # use Parser with Lexer to generate AST
