@@ -32,10 +32,22 @@ class Char_stream:
         self.source = char_stream.source
         self.c = char_stream.c
 
-# reuse Char_stream to extend Lexer and then Parser - adding new methods in the future, and vice versa
-class Lexer(Char_stream):
+class Token():
     pass
 
+# reuse Char_stream to extend Lexer and then Parser - adding new methods in the future, and vice versa
+class Lexer():
+
+    def __init__(self, expression):
+        self.char_stream = Char_stream(expression)
+        self.tokens = [] # List<Token>
+
+    def lex(): # tokenize
+        return self.tokens
+
 # use Parser with Lexer to generate AST
-class Parser(Lexer): 
-    pass
+class Parser(): 
+
+    def __init__(self, expression):
+        self.tokens = Lexer(expression).lex()
+        self.ast = {}
