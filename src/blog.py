@@ -51,7 +51,7 @@ def prim(char_stream: Char_stream, get: bool, scope: dict, flags: utils.Map):
             raise SyntaxError("Missing ')'")
         char_stream.next_char() # eat ')'
         skip_space(char_stream)
-        chain_main(char_stream, value_ptr, scope)
+        chain_main(char_stream, value_ptr, scope) # wrap up method chaining to enable '(a).a' syntax
         value = value_ptr[0]
         return value
 
