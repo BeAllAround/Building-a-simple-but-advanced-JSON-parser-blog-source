@@ -7,12 +7,12 @@ def skip_space(char_stream: Char_stream):
     while not char_stream.is_over() and (char_stream == ' ' or char_stream == '\n'):
         char_stream.next_char()
 
-def parse_tem(char_stream: Char_stream, get: bool):
+def parse_id(char_stream: Char_stream, get: bool):
     if get:
         char_stream.next_char()
     value = ''
     if not char_stream.current.isalpha():
-        raise SyntaxError("Expected a template to start with an alpha")
+        raise SyntaxError("Expected an identifier to start with an alpha")
     while char_stream.current.isalpha() or char_stream.current.isdigit():
         value += char_stream.current
         char_stream.next_char()
@@ -85,9 +85,9 @@ def chain_main(char_stream: Char_stream, value_ptr: list, scope: dict):
                 else:
                     raise SyntaxError("Unexpected char while parsing a function: " + char_stream.current)
         elif type(value_ptr[0]) == dict and char_stream == '.':
-            tem = parse_tem(char_stream, True)
+            identifier = parse_id(char_stream, True)
             skip_space(char_stream)
-            value_ptr[0] = value_ptr[0][tem]
+            value_ptr[0] = value_ptr[0][identifier]
             continue
 
         else:
@@ -114,18 +114,18 @@ def parse_obj(char_stream: Char_stream, get: bool, scope: dict, flags: utils.Map
         skip_space(char_stream)
         return int(token, 10) # base 10
 
-    elif char_stream.current.isalpha() and flags.temFlag:
-        tem = parse_tem(char_stream, False)
+    elif char_stream.current.isalpha() and flags.temFlag: # identifier type check using prefix checking
+        identifier = parse_id(char_stream, False)
         skip_space(char_stream)
 
         # print('flags: ', tem, flags)
 
         if flags.isKey:
-            return tem
+            return identifier
 
-        if tem not in scope.keys():
-            raise NameError(tem + " not defined")
-        return scope[tem]
+        if identifier not in scope.keys():
+            raise NameError(identifier + " not defined")
+        return scope[identifier]
 
     elif char_stream == '{':
         obj = {}
