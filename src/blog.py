@@ -7,8 +7,8 @@ def skip_space(char_stream: Char_stream):
     while not char_stream.is_over() and (char_stream == ' ' or char_stream == '\n'):
         char_stream.next_char()
 
-def parse_id(char_stream: Char_stream, get: bool):
-    if get:
+def parse_id(char_stream: Char_stream, advance: bool):
+    if advance:
         char_stream.next_char()
     value = ''
     if not char_stream.current.isalpha():
@@ -18,8 +18,8 @@ def parse_id(char_stream: Char_stream, get: bool):
         char_stream.next_char()
     return value
 
-def expr(char_stream: Char_stream, get: bool, scope: dict, flags: utils.Map):
-    left = term(char_stream, get, scope, flags)
+def expr(char_stream: Char_stream, advance: bool, scope: dict, flags: utils.Map):
+    left = term(char_stream, advance, scope, flags)
 
     while True:
         if char_stream == '+':
@@ -29,8 +29,8 @@ def expr(char_stream: Char_stream, get: bool, scope: dict, flags: utils.Map):
         else:
             return left
 
-def term(char_stream: Char_stream, get: bool, scope: dict, flags: utils.Map):
-    left = prim(char_stream, get, scope, flags)
+def term(char_stream: Char_stream, advance: bool, scope: dict, flags: utils.Map):
+    left = prim(char_stream, advance, scope, flags)
 
     while True:
         if char_stream == '*':
@@ -40,8 +40,8 @@ def term(char_stream: Char_stream, get: bool, scope: dict, flags: utils.Map):
         else:
             return left
 
-def prim(char_stream: Char_stream, get: bool, scope: dict, flags: utils.Map):
-    if get:
+def prim(char_stream: Char_stream, advance: bool, scope: dict, flags: utils.Map):
+    if advance:
         char_stream.next_char()
     skip_space(char_stream)
     if char_stream == '(':
@@ -94,14 +94,14 @@ def chain_main(char_stream: Char_stream, value_ptr: list, scope: dict):
             break
 
 
-def parse_obj_and_chain(char_stream: Char_stream, get: bool, scope: dict, flags: utils.Map):
-    value = parse_obj(char_stream, get, scope, flags)
+def parse_obj_and_chain(char_stream: Char_stream, advance: bool, scope: dict, flags: utils.Map):
+    value = parse_obj(char_stream, advance, scope, flags)
     value_ptr = [value]
     chain_main(char_stream, value_ptr, scope)
     return value_ptr[0]
 
-def parse_obj(char_stream: Char_stream, get: bool, scope: dict, flags: utils.Map):
-    if get:
+def parse_obj(char_stream: Char_stream, advance: bool, scope: dict, flags: utils.Map):
+    if advance:
         char_stream.next_char()
 
     skip_space(char_stream)
