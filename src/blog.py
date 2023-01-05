@@ -166,7 +166,7 @@ def parse_obj(char_stream: Char_stream, advance: bool, scope: dict, flags: utils
 # because of our recursion logic, the function will fail to check -
 # if there are extra characters that give an error: for example: "{}}", "())" and similar.
 def parse_object(stream: Char_stream, scope): 
-    default_flags = {}
+    default_flags = utils.Map({})
     obj = parse_obj(stream, False, scope, default_flags)
     if not stream.is_over():
         raise SyntaxError('unmatched ' + stream.current)
