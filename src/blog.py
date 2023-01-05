@@ -162,12 +162,16 @@ def parse_obj(char_stream: Char_stream, advance: bool, scope: dict, flags: utils
     else:
         raise SyntaxError("Unexpected char " + char_stream.current)
 
-def parse_object(stream: Char_stream, scope):
+
+# because of our recursion logic, the function will fail to check -
+# if there are extra characters that give an error: for example: "{}}", "())" and similar.
+def parse_object(stream: Char_stream, scope): 
     default_flags = {}
     obj = parse_obj(stream, False, scope, default_flags)
     if not stream.is_over():
         raise SyntaxError('unmatched ' + stream.current)
     return obj
+
 
 def main():
     text = Char_stream(r'''{a: 12, b: 11, c: {b: 1, d: {a: 21}}, d1: ((c.d.a)*2+1), d2: 110, f1: func(1,2), f2: func1() }''')
