@@ -106,11 +106,11 @@ def parse_obj(char_stream: Char_stream, advance: bool, scope: dict, flags: utils
     skip_space(char_stream)
 
     if char_stream.peek().isdigit():
-        token = ''
+        value = ''
         while char_stream.peek().isdigit():
-            token += char_stream.advance()
+            value += char_stream.advance()
         skip_space(char_stream)
-        return int(token, 10) # base 10
+        return int(value, 10) # base 10
 
     elif char_stream.peek().isalpha() and flags.temFlag: # identifier type check using prefix checking
         identifier = parse_id(char_stream, False)
