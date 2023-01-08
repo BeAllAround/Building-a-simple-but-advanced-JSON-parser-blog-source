@@ -182,10 +182,11 @@ def main():
     scope = {'func': lambda x,y: x+y, 'func1': lambda: print('hi!'),}
 
     obj = parse_object(text, scope)
-    # snippet 9 - displaying your json data
-    utils.export_json(obj)
-    print(obj)
 
+    utils.export_json(obj)
+    # print(obj)
+
+# Snippet 14 - displaying our json data
 def json_export():
     scope =  {'func': lambda x,y: x+y,} # our parser can evaluate functions
     default_flags = utils.Map({})

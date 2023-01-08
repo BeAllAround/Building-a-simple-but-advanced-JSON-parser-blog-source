@@ -4,7 +4,7 @@ class EndLine(Exception):
 class Char_stream:
 
     def __init__(self, source: str, c: int = 0):
-        self.c = c # counter for our token stream
+        self.c = c # counter for our character stream
         self.source = source
 
     @property
