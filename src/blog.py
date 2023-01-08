@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+
 import sys
 import utils
 from parser import Char_stream # our library that will help us with lexical analysis/tokenization
