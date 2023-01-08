@@ -189,6 +189,8 @@ def json_export():
     scope =  {'func': lambda x,y: x+y,} # our parser can evaluate functions
     default_flags = utils.Map({})
     utils.export_json(parse_obj(Char_stream('{' + input() + '}'), False, scope, default_flags))
+    # note that 'utils.export_json' is an alternative to 'json.dump' supported by Python Standard Library
+    # more details on that here: https://docs.python.org/3/library/json.html
 
 if __name__ == '__main__':
     main()
