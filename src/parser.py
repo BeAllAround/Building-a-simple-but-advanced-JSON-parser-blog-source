@@ -37,7 +37,7 @@ class Token():
         self.tp = tp
         self.char = char
 
-# reuse Char_stream to extend Lexer and then Parser - adding new methods in the future, and vice versa
+# reuse Char_stream to extend Lexer and then Parser - adding new methods as we go
 class Lexer():
 
     def __init__(self, expression):
