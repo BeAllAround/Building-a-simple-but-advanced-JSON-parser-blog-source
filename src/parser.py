@@ -1,10 +1,10 @@
 class EndLine(Exception):
     pass
 
-class Char_stream:
+class CharStream:
     pass
 
-class Char_stream:
+class CharStream:
 
     def __init__(self, source: str, c: int = 0):
         self.c = c # counter for our stream
@@ -31,7 +31,7 @@ class Char_stream:
     def is_over(self):
         return not self.c < len(self.source)
 
-    def set_cs(self, char_stream: Char_stream):
+    def set_cs(self, char_stream: CharStream):
         self.source = char_stream.source
         self.c = char_stream.c
 
@@ -41,11 +41,11 @@ class Token:
         self.tp = tp
         self.char = char
 
-# reuse Char_stream to extend Lexer and then Parser - adding new methods as we go
+# reuse CharStream to extend Lexer and then Parser - adding new methods as we go
 class Lexer:
 
     def __init__(self, expression: str):
-        self.char_stream: Char_stream = Char_stream(expression)
+        self.char_stream: CharStream = CharStream(expression)
         self.tokens: list = [] # List<Token>
 
     def lex(self): # tokenize
