@@ -147,8 +147,8 @@ def interpret_obj(char_stream: CharStream, advance: bool, scope: dict, flags: ut
             # print('key: ', key)
             if char_stream.peek() == ':':
                 value = expr(char_stream, True, obj_scope, utils.Map({'temFlag': True, 'isKey': False,}))
-                utils.deep_update(obj_scope, {key: value})
-                utils.deep_update(obj, {key: value})
+                utils.deep_update(obj_scope, { key: value })
+                utils.deep_update(obj, { key: value })
 
                 if char_stream.peek() == '}':
                     char_stream.advance() # eat '}'
@@ -167,7 +167,7 @@ def interpret_obj(char_stream: CharStream, advance: bool, scope: dict, flags: ut
 
 # because of our recursion logic, the function will fail to check -
 # if there are extra characters that give an error: for example: "{}}", "())" and similar.
-def interpret_object(stream: CharStream, scope): 
+def interpret_object(stream: CharStream, scope: dict): 
     default_flags = utils.Map({})
     obj = interpret_obj(stream, False, scope, default_flags)
     if not stream.is_over():
@@ -180,7 +180,7 @@ def main():
     text = CharStream(r'''{ c: {b: 1, d: {a: 21}}, d1: (((c.d).a)*2+1), f: (func)(1+1, 2*2) }''')
     # text = CharStream('{a:1}')
     # text = CharStream('{}')
-    scope = {'func': lambda x,y: x+y, 'func1': lambda: print('hi!'),}
+    scope = { 'func': lambda x,y: x+y, 'func1': lambda: print('hi!'), }
 
     obj = interpret_object(text, scope)
 
@@ -190,7 +190,7 @@ def main():
 
 # Snippet 14 - formatting our json data
 def json_export():
-    scope =  {'func': lambda x,y: x+y,} # our language can call functions
+    scope =  { 'func': lambda x,y: x+y, } # our language can call functions
     default_flags = utils.Map({})
     utils.export_json(interpret_obj(CharStream('{' + input() + '}'), False, scope, default_flags))
     # note that 'utils.export_json' is an alternative to 'json.dump'from Python Standard Library
