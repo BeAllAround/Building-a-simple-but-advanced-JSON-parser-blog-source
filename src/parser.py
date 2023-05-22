@@ -43,7 +43,6 @@ class Token:
 
 # reuse CharStream to extend Lexer and then Parser - adding new methods as we go
 class Lexer:
-
     def __init__(self, expression: str):
         self.char_stream: CharStream = CharStream(expression)
         self.tokens: list = [] # List<Token>
@@ -53,7 +52,6 @@ class Lexer:
 
 # use Parser with Lexer to generate AST
 class Parser: 
-
     def __init__(self, expression: str):
         self.tokens = Lexer(expression).lex()
         self.ast = {}
