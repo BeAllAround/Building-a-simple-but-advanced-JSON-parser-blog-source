@@ -1,3 +1,3 @@
 # Building-a-simple-but-advanced-jsonic-language-blog-source
 
-Source code for "Building a simple but Advanced Jsonic language" blog
+Source code for  [https://www.linkedin.com/pulse/building-simple-advanced-jsonic-language-aleksandar-milenkovic](url) blog
